@@ -11,10 +11,13 @@ const SoundCloudAPI = {
   },
   search: function(query: string) {
     return SC.get('/tracks', {
-      q: query
+      /** Searching keyword */
+      q: query,
+      /** Searching amount */
+      limit: 30
     });
   },
-  stream: function(id:number): Player {
+  stream: function(id:number): Promise<Player> {
     return SC.stream(`/tracks/${id}`);
   }
 };
