@@ -12,8 +12,8 @@ export function* getrPlayerFromAPI(action: setPlayerAction) {
   
   yield put({type: GET_PLAYER_PENDING});
   try {
-    const player = yield call(() => SoundCloudAPI.stream(stream_id));
-    yield put({ type: GET_PLAYER, payload: { player } });
+    const SCPlayer = yield call(() => SoundCloudAPI.stream(stream_id));
+    yield put({ type: GET_PLAYER, payload: { SCPlayer } });
     yield put({ type: GET_PLAYER_SUCCESS });
   } catch (error) {
     yield put({ type: GET_PLAYER_FAILURE });
