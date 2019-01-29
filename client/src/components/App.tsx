@@ -1,49 +1,91 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { Container, Header, Icon, Button } from 'semantic-ui-react';
+import SearchInput from './SearchInput';
 import SoundCloudAPI from '../services';
-import { Player } from '../interfaces';
+import { Player, State, Action } from '../interfaces';
+import TrackList from './TrackList';
 
-class App extends React.Component {
-  state: {
-    player: Player;
-  };
+interface WrapedProps {
+  player: Player;
+}
+
+class App extends React.Component <WrapedProps> {
 
   async componentDidMount() {
     await SoundCloudAPI.init();
-    const player = await SoundCloudAPI.stream(298089055);
-    this.setState({ player });
-
-    player.on('state-change', (state) => {
-      console.log(`@ Player is Currently ${state}`);
-    });
-
   }
 
-  onSearch = async (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.keyCode === 13) {
-      const query = (event.target as HTMLInputElement).value;
-      const tracks = await SoundCloudAPI.search(query);
-      console.log(tracks);
-    }
-
-  };
-
   onPlayButtonClick = () => {
-    this.state.player.play();
+    const { player } = this.props;
+    if (player) player.play();
   }
 
   onPauseButtonClick = () => {
-    this.state.player.pause();
+    const { player } = this.props;
+    if (player) player.pause();
   }
+
+  renderHeader = () => (
+    <Header as='h1' icon color="teal">
+      <Icon name='soundcloud' />
+    </Header>
+  )
+
+  renderMediaButtons = () => (
+    <React.Fragment>
+      <Button.Group color="teal" icon>
+        <Button>
+          <Icon name='backward' />
+        </Button>
+        <Button>
+          <Icon name='play' onClick={this.onPlayButtonClick} />
+        </Button>
+        <Button>
+          <Icon name='pause' onClick={this.onPauseButtonClick} />
+        </Button>
+        <Button>
+          <Icon name='stop' />
+        </Button>
+        <Button>
+          <Icon name='forward' />
+        </Button>
+      </Button.Group>{' '}
+      <Button.Group color="teal" icon>
+        <Button>
+          <Icon name='redo' />
+        </Button>
+        <Button>
+          <Icon name='shuffle' />
+        </Button>
+        <Button>
+          <Icon name='volume up' />
+        </Button>
+      </Button.Group>
+    </React.Fragment>
+  )
 
   public render() {
     return (
-      <div>
-        <input type='text' onKeyDown={this.onSearch} />
-        <button type="button" onClick={this.onPlayButtonClick}> play </button>
-        <button type="button" onClick={this.onPauseButtonClick}> pause </button>
-      </div>
+      <Container>
+        {this.renderHeader()}
+        <br />
+        <SearchInput />
+        <br />
+        {this.renderMediaButtons()}
+        <br />
+        <TrackList />
+      </Container>
     );
   }
 }
 
-export default App;
+export default connect(
+  (state: State) => ({
+    player: state.player.SCPlayer,
+  }),
+  (dispatch: Dispatch<Action>) => ({
+    
+  })
+)(App);
