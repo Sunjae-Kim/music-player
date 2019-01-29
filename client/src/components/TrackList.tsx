@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ItemGroup } from 'semantic-ui-react';
+import { Card } from 'semantic-ui-react';
 import { Track, State } from 'src/interfaces';
 import TrackItem from './TrackItem';
 import { connect } from 'react-redux';
@@ -9,17 +9,14 @@ interface WrapedProps {
 }
 
 const TrackList = (props: WrapedProps) => {
-  if(props.tracks) {
+  const tracks = props.tracks || [];
     return (
-      <ItemGroup divided>
-        {props.tracks.map(track => ( 
+      <Card.Group>
+        {tracks.map(track => ( 
           <TrackItem key={track.id} {...track} />
         ))}
-      </ItemGroup>
+      </Card.Group>
     )
-  } else {
-    return <div> There is no search result yet.. </div>;
-  }
 }
 
 export default connect(
