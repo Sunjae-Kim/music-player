@@ -4,6 +4,22 @@ body {
   font-family: sans-serif;
 }
 
-.container {
-  padding: 5em 0em;
+/* Top Navigation */
+.ui.fixed.top.sticky {
+  width: 100%;
+  padding: 0;
+}
+.ui.text.menu {
+  margin: 0 0em;
+}
+/* Top Navigation */
+
+#logo {
+  margin: 0 1rem;
+}
+
+.ui.cards {
+  padding: 5em 2em;
+  display: flex;
+  justify-content: space-between;
 }
