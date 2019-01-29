@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Container, Header, Icon, Button } from 'semantic-ui-react';
+import { Container, Menu, Icon, Button, Segment } from 'semantic-ui-react';
 import SearchInput from './SearchInput';
 import SoundCloudAPI from '../services';
 import { Player, State, Action } from '../interfaces';
@@ -28,14 +28,21 @@ class App extends React.Component <WrapedProps> {
   }
 
   renderHeader = () => (
-    <Header as='h1' icon color="teal">
-      <Icon name='soundcloud' />
-    </Header>
+    <Segment className="ui fixed top sticky">
+      <Menu text>
+        <Menu.Item>
+          <Icon id="logo" color="orange" size="huge" name='soundcloud' />
+        </Menu.Item>
+        <Menu.Item>
+          <SearchInput />
+        </Menu.Item>
+      </Menu>
+    </Segment>
   )
 
   renderMediaButtons = () => (
-    <React.Fragment>
-      <Button.Group color="teal" icon>
+    <div className="ui fixed bottom sticky">
+      <Button.Group color="orange" icon>
         <Button>
           <Icon name='backward' />
         </Button>
@@ -52,7 +59,7 @@ class App extends React.Component <WrapedProps> {
           <Icon name='forward' />
         </Button>
       </Button.Group>{' '}
-      <Button.Group color="teal" icon>
+      <Button.Group color="orange" icon>
         <Button>
           <Icon name='redo' />
         </Button>
@@ -63,15 +70,13 @@ class App extends React.Component <WrapedProps> {
           <Icon name='volume up' />
         </Button>
       </Button.Group>
-    </React.Fragment>
+    </div>
   )
 
   public render() {
     return (
-      <Container>
+      <Container fluid>
         {this.renderHeader()}
-        <br />
-        <SearchInput />
         <br />
         {this.renderMediaButtons()}
         <br />
