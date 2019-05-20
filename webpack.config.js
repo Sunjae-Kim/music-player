@@ -7,7 +7,7 @@ module.exports = {
     path.resolve(__dirname, 'src') + '/index.tsx',
   ],
   output: {
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, 'build'),
     filename: 'bundle.js',
   },
   resolve: {
@@ -28,10 +28,7 @@ module.exports = {
   },
   devServer: {
     port: 3000,
-    open: true,
-    proxy: {
-      '/api': 'http://localhost:8080',
-    },
+    open: true
   },
   plugins: [
     new HtmlWebpackPlugin({
